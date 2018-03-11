@@ -11,9 +11,12 @@ import time
 from threading import Thread
 q = Queue()
 
+nbworkers = 2
+
 states = {}
 
 keyqueue = []
+
 
 def getSnapshot(url,width,height,name,key,visuel,watermark):
     from selenium import webdriver
@@ -58,10 +61,11 @@ def worker():
 
 
 
-#for i in range(num_worker_threads):
-workthread = Thread(target=worker)
-workthread.daemon = True
-workthread.start()
+for i in range(nbworkers):
+    workthread = Thread(target=worker)
+    workthread.daemon = True
+    workthread.start()
+    
 @app.route('/retrieve_snapshot')
 def retrieve_image():
     key = request.args.get('key')
