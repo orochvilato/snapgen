@@ -1,0 +1,7 @@
+config_private.py
+.pyenv/
+*.pyc
+logs.html
+*.wsgi
+index.json
+data/save
