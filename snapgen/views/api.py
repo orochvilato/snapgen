@@ -67,8 +67,13 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
 def worker():
     while True:
         item = q.get()
-        snapshot = getSnapshot(**item)
-        memcache.set(item['key']+'_image',{'image':snapshot,'name':item['name']},60)
+        try:
+            snapshot = getSnapshot(**item)
+            memcache.set(item['key']+'_image',{'image':snapshot,'name':item['name']},60)
+        except:
+            states[key] = {'etat':u'Erreur','avancement':-1}
+
+
         keyqueue.remove(item['key'])
         q.task_done()
 
