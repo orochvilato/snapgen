@@ -147,9 +147,9 @@ def sendmail(sender,recipients,subject,msg='',attach=[]):
 
     if isinstance(ret, dict):
         if ret:
-            print 'failed recipients:', ', '.join(ret.keys())
+            print('failed recipients:', ', '.join(ret.keys()))
     else:
-        print 'error:', ret
+        print('error:', ret)
 
 def api_notify(subject,msg="",attach=[],recipients=NOTIFY_ADDRESS):
     sendmail(('Observatoire API','api@observatoire-democratie.fr'),recipients,subject,msg,attach)

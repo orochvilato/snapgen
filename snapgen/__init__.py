@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from config_private import smtp,privatekey
+from .config_private import smtp,privatekey
 
 import locale
 locale.setlocale(locale.LC_ALL, 'fr_FR.utf8')
@@ -28,7 +28,7 @@ def testerror():
 
 if 1: #enable_logging
     import logging
-    from cStringIO import StringIO
+    from io import StringIO
     from logging.handlers import SMTPHandler
     from logging import StreamHandler,Formatter
     import os
@@ -74,4 +74,4 @@ Message:
     app.logger.addHandler(mail_handler)
     app.logger.addHandler(eai_handler)
 
-from views import api
+from .views import api
