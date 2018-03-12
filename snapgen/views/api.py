@@ -6,7 +6,7 @@ from queue import Queue
 from selenium import webdriver
 from selenium.webdriver.chrome import service
 from PIL import Image,ImageChops,ImageFont,ImageDraw
-from io import StringIO
+from io import BytesIO
 import time
 from threading import Thread
 q = Queue()
@@ -39,11 +39,11 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
         time.sleep(0.5)
         states[key] = {'etat':u'Génération du visuel','avancement':60+i*5}
 
-    im = Image.open(StringIO(driver.get_screenshot_as_png()))
+    im = Image.open(BytesIO(driver.get_screenshot_as_png()))
     im2 = im.crop((0,0,width,height))
     driver.quit()
     cdservice.stop()
-    output = StringIO()
+    output = BytesIO()
     im2.save(output,'PNG')
     states[key] = {'etat':u'Génération du visuel','avancement':100}
 
@@ -65,7 +65,7 @@ for i in range(nbworkers):
     workthread = Thread(target=worker)
     workthread.daemon = True
     workthread.start()
-    
+
 @app.route('/retrieve_snapshot')
 def retrieve_image():
     key = request.args.get('key')

@@ -120,7 +120,7 @@ def image_response(type,v,filename=None,cookies={},nocache=True):
     if filename:
         r.headers['Content-Disposition']= "attachment;filename=%s-%s.png" % (filename,datetime.datetime.now().strftime('%Y-%m-%d'))
 
-    for k,v in cookies.iteritems():
+    for k,v in iter(cookies.items()):
         r.set_cookie(k,v)
     #r = Response(v, mimetype="image/%s" % type,headers=headers)
 
