@@ -71,7 +71,7 @@ def worker():
             snapshot = getSnapshot(**item)
             memcache.set(item['key']+'_image',{'image':snapshot,'name':item['name']},60)
         except:
-            states[key] = {'etat':u'Erreur','avancement':-1}
+            states[item['key']] = {'etat':u'Erreur','avancement':-1}
 
 
         keyqueue.remove(item['key'])
