@@ -67,7 +67,7 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
 def worker():
     while True:
         item = q.get()
-        retries = 3
+        retries = 6
         while retries>0:
             try:
                 snapshot = getSnapshot(**item)
