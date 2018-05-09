@@ -27,7 +27,7 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
     options = webdriver.ChromeOptions()
     options.binary_location = '/usr/bin/google-chrome'
     options.add_argument('headless')
-    print(watermark)
+
     options.add_argument('window-size=%dx%d' % (width,height+100))
     cdservice = service.Service('/usr/bin/chromedriver')
     states[key] = {'etat':u'Génération du visuel','avancement':20}
@@ -48,6 +48,11 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
     driver.quit()
     cdservice.stop()
     output = BytesIO()
+    import json
+    data = json.loads(watermark)
+    if data['visuel'] in ['urgdem','urgsoc','eurque','paxint','prohum','urgeco']:
+        im2 = add_corners(im2,30)
+
     im2.save(output,'PNG')
 
     # Watermark / stegano
@@ -60,7 +65,24 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
 
     states[key] = {'etat':u'Génération du visuel','avancement':100}
 
+    return output.getvalue()
     return output_final.getvalue()
+
+
+def add_corners(im, rad):
+    circle = Image.new('L', (rad * 2, rad * 2), 0)
+    draw = ImageDraw.Draw(circle)
+    draw.ellipse((0, 0, rad * 2, rad * 2), fill=255)
+    alpha = Image.new('L', im.size, 255)
+    w, h = im.size
+    print(w,h)
+    alpha.paste(circle.crop((0, 0, rad, rad)), (0, 0))
+    alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
+    alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
+    alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
+    im.putalpha(alpha)
+    return im
+
 
 
 
