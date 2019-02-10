@@ -27,7 +27,7 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
     options = webdriver.ChromeOptions()
     options.binary_location = '/usr/bin/google-chrome'
     options.add_argument('headless')
-
+    print(url)
     options.add_argument('window-size=%dx%d' % (width,height+100))
     cdservice = service.Service('/usr/bin/chromedriver')
     states[key] = {'etat':u'Génération du visuel','avancement':20}
