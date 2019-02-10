@@ -27,7 +27,7 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
     options = webdriver.ChromeOptions()
     options.binary_location = '/usr/bin/google-chrome'
     options.add_argument('headless')
-    print(url)
+
     options.add_argument('window-size=%dx%d' % (width,height+100))
     cdservice = service.Service('/usr/bin/chromedriver')
     states[key] = {'etat':u'Génération du visuel','avancement':20}
@@ -149,7 +149,7 @@ def prepare():
         'name':request.form.get('name'),
         'width':int(request.form.get('width') or 1024),
         'height':int(request.form.get('height') or 1024), 'visuel':request.form.get('visuel'),'key':key,'watermark':request.form.get('watermark')}
-
+    print(item)
     states[key] = {'etat':'En attente','avancement':0}
     keyqueue.append(key)
     q.put(item)
