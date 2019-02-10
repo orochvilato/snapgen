@@ -41,7 +41,7 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
 
     for i in range(6):
         time.sleep(0.5)
-        states[key] = {'etat':u'Génération du visuel','avancement':60+i*5}
+        states[key] = {'etat':u'Génération du visuel','avancement':60+i*5,'url':url}
 
     im = Image.open(BytesIO(driver.get_screenshot_as_png()))
     im2 = im.crop((0,0,width,height))
