@@ -91,11 +91,11 @@ def worker():
         item = q.get()
         retries = 6
         while retries>0:
-            try:
+            #try:
                 snapshot = getSnapshot(**item)
                 memcache.set(item['key']+'_image',{'image':snapshot,'name':item['name']},60)
                 retries = -1
-            except:
+            #except:
                 retries -= 1
 
         if retries>=0:
