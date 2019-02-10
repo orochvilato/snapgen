@@ -41,7 +41,7 @@ def getSnapshot(url,width,height,name,key,visuel,watermark):
 
     for i in range(6):
         time.sleep(0.5)
-        states[key] = {'etat':u'Génération du visuel','avancement':60+i*5,'url':url}
+        states[key] = {'etat':u'Génération du visuel','avancement':60+i*5}
 
     im = Image.open(BytesIO(driver.get_screenshot_as_png()))
     im2 = im.crop((0,0,width,height))
@@ -91,11 +91,11 @@ def worker():
         item = q.get()
         retries = 6
         while retries>0:
-            #try:
+            try:
                 snapshot = getSnapshot(**item)
-                memcache.set(item['key']+'_image',{'image':snapshot,'name':item['name']},60)
+                memcache.set(item['key']+'_image',{'image':snapshot,'name':item['name']},600)
                 retries = -1
-            #except:
+            except:
                 retries -= 1
 
         if retries>=0:
