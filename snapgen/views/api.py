@@ -149,8 +149,8 @@ def prepare():
         'name':request.form.get('name'),
         'width':int(request.form.get('width') or 1024),
         'height':int(request.form.get('height') or 1024), 'visuel':request.form.get('visuel'),'key':key,'watermark':request.form.get('watermark')}
-    print(item)
-    states[key] = {'etat':'En attente','avancement':0}
+
+    states[key] = {'etat':'En attente','avancement':0,'url':item['url']}
     keyqueue.append(key)
     q.put(item)
     return key
